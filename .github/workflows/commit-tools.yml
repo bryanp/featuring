@@ -60,10 +60,3 @@ jobs:
         COMMIT__GIT_NAME: "Metabahn Bot"
         COMMIT__GIT_TOKEN: ${{secrets.COMMIT_TOKEN}}
         COMMIT__GIT_USER: "metabahn-bot"
-
-ruby:
-  standard:
-    extra: |-2
-      ignore:
-        - 'lib/featuring/persistence/adapter.rb':
-          - Lint/UnderscorePrefixedVariableName

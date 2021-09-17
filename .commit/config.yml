@@ -56,3 +56,9 @@ ruby:
     extra: |-2
         spec.files = Dir["CHANGELOG.md", "README.md", "LICENSE", "lib/**/*"]
         spec.require_path = "lib"
+
+  standard:
+    extra: |-2
+      ignore:
+        - 'lib/featuring/persistence/adapter.rb':
+          - Lint/UnderscorePrefixedVariableName
