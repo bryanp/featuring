@@ -54,7 +54,7 @@ module Features
 end
 
 Features.some_feature?
-=> false
+# => false
 ```
 
 When using feature flags on an object, checks are available through the `features` instance method:
@@ -68,7 +68,7 @@ end
 
 instance = ObjectWithFeatures.new
 instance.features.some_feature?
-=> false
+# => false
 ```
 
 #### Passing values to feature flag blocks
@@ -85,10 +85,10 @@ module Features
 end
 
 Features.some_feature?(:some_value)
-=> true
+# => true
 
 Features.some_feature?(:some_other_value)
-=> false
+# => false
 ```
 
 #### Truthiness 100% guaranteed
@@ -105,7 +105,7 @@ module Features
 end
 
 Features.some_feature?
-=> true
+# => true
 ```
 
 #### Check method context
@@ -127,7 +127,7 @@ end
 
 instance = ObjectWithFeatures.new
 instance.features.some_feature?
-=> true
+# => true
 ```
 
 Note that this happens through delegators, which means that instance variables are not accessible to the feature flag. For cases like this, define an `attr_accessor`.
@@ -164,7 +164,7 @@ Nothing is persisted by default. Instead, each feature flag must be persisted ex
 
 ```ruby
 User.find(1).features.some_feature?
-=> false
+# => false
 ```
 
 #### Persisting a default value
@@ -174,7 +174,7 @@ Use the `persist` method to persist a feature flag with its default value:
 ```ruby
 User.find(1).features.persist :some_feature
 User.find(1).features.some_feature?
-=> false
+# => false
 ```
 
 This can be used to isolate objects from future changes to default values.
@@ -186,7 +186,7 @@ Use the `set` method to persist a feature flag with a specific value:
 ```ruby
 User.find(1).features.set :some_feature, true
 User.find(1).features.some_feature?
-=> true
+# => true
 ```
 
 #### Enabling a feature flag
@@ -196,7 +196,7 @@ Enable a flag using the `enable` method:
 ```ruby
 User.find(1).features.enable :some_feature
 User.find(1).features.some_feature?
-=> true
+# => true
 ```
 
 #### Disabling a feature flag
@@ -206,7 +206,7 @@ Disable a flag using the `disable` method:
 ```ruby
 User.find(1).features.disable :some_feature
 User.find(1).features.some_feature?
-=> false
+# => false
 ```
 
 #### Resetting a feature flag
@@ -217,7 +217,7 @@ Reset a flag using the `reset` method:
 User.find(1).features.enable :some_feature
 User.find(1).features.reset :some_feature
 User.find(1).features.some_feature?
-=> false
+# => false
 ```
 
 #### Persisting many feature flags at once
@@ -231,10 +231,10 @@ User.find(1).features.transaction |features|
 end
 
 User.find(1).features.some_feature?
-=> true
+# => true
 
 User.find(1).features.some_other_feature?
-=> false
+# => false
 ```
 
 Persistence happens in one step. Using the ActiveRecord adapter, all feature flag changes within the transaction block will be committed in a single `INSERT` or `UPDATE` query.
@@ -251,12 +251,12 @@ User.find(1).features.enable :some_feature
 
 # feature still appears disabled for existing instances
 user.features.some_feature?
-=> false
+# => false
 
 # reloading the features invalidates the cache:
 user.features.reload
 user.features.some_feature?
-=> true
+# => true
 ```
 
 When used in an ActiveRecord model, feature flags are automatically reloaded with the object:
@@ -269,12 +269,12 @@ User.find(1).features.enable :some_feature
 
 # feature still appears disabled for existing instances
 user.features.some_feature?
-=> false
+# => false
 
 # reloading the model invalidates the cache:
 user.reload
 user.features.some_feature?
-=> true
+# => true
 ```
 
 #### Checking the persisted status
@@ -283,12 +283,12 @@ The persisted status of a flag can be checked with the `persisted?` method:
 
 ```ruby
 User.find(1).features.persisted?(:some_feature)
-=> false
+# => false
 
 User.find(1).features.persist :some_feature
 
 User.find(1).features.persisted?(:some_feature)
-=> true
+# => true
 ```
 
 Checking if a specific value is persisted for a flag is also possible:
@@ -297,10 +297,10 @@ Checking if a specific value is persisted for a flag is also possible:
 User.find(1).features.enable :some_feature
 
 User.find(1).features.persisted?(:some_feature, true)
-=> true
+# => true
 
 User.find(1).features.persisted?(:some_feature, false)
-=> false
+# => false
 ```
 
 An example of where this is useful can be found in the next section.
@@ -352,10 +352,10 @@ end
 instance = ObjectWithFeatures.new
 
 instance.some_feature?
-=> true
+# => true
 
 instance.another_feature?
-=> true
+# => true
 ```
 
 #### Calling `super` for overloaded feature flags
@@ -381,12 +381,12 @@ class ObjectWithFeatures
 end
 
 User.find(1).features.some_feature?
-=> true/false at random
+# => true/false at random
 
 User.find(1).features.enable :some_feature
 
 User.find(1).features.some_feature?
-=> true (always)
+# => true (always)
 ```
 
 ### Serializing Feature Flags
@@ -425,9 +425,9 @@ end
 Features.serialize do |serializer|
   serializer.include :some_enabled_feature
 end
-=> {
-  some_enabled_feature: true
-}
+# => {
+#   some_enabled_feature: true
+# }
 ```
 
 #### Excluding specific feature flags
@@ -445,9 +445,9 @@ end
 Features.serialize do |serializer|
   serializer.exclude :some_enabled_feature
 end
-=> {
-  some_disabled_feature: false
-}
+# => {
+#   some_disabled_feature: false
+# }
 ```
 
 #### Providing context for complex feature flags
@@ -464,7 +464,7 @@ module Features
 end
 
 Features.serialize
-=> ArgumentError
+# => ArgumentError
 ```
 
 Context can be provided for these feature flag using `context`:
@@ -473,7 +473,7 @@ Context can be provided for these feature flag using `context`:
 Features.serialize do |serializer|
   serializer.context :some_complex_feature, :some_value
 end
-=> {
-  some_complex_feature: true
-}
+# => {
+#   some_complex_feature: true
+# }
 ```
