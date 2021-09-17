@@ -41,6 +41,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:10.8
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ''
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          - 5432/tcp
+
     name: Test ${{ matrix.ruby }}
 
     strategy:
@@ -73,6 +83,9 @@ jobs:
           bundle install --jobs=3 && bundle update --jobs=3
 
       - name: Run Tests
+        env:
+          CI: true
+          DATABASE_URL: postgres://postgres@localhost:${{ job.services.postgres.ports[5432] }}/
         shell: bash -l -e -o pipefail {0}
         run: |
-          CI=true bundle exec rspec
+          bundle exec rspec
