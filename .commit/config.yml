@@ -1,0 +1,54 @@
+commit:
+  changelogs:
+    - label: "commit.changelog"
+      destination: "./CHANGELOG.md"
+
+  changetypes:
+    - label: "commit.type.add"
+      name: "add"
+    - label: "commit.type.chg"
+      name: "chg"
+    - label: "commit.type.fix"
+      name: "fix"
+    - label: "commit.type.dep"
+      name: "dep"
+
+  includes:
+    - ruby-gem
+    - ruby-rspec
+    - ruby-standard
+    - oss
+    - git
+    - base
+
+  externals:
+    - repo: "metabahn/commit-templates"
+      private: true
+
+git:
+  ignore:
+    - "tmp"
+
+license:
+  slug: mit
+  name: "MIT"
+
+project:
+  slug: "featuring"
+  description: "Feature flags for Ruby objects."
+
+  author:
+    name: "Bryan Powell"
+    email: "bryan@metabahn.com"
+    homepage: "https://github.com/metabahn/featuring/"
+
+  copyright:
+    attribution: "Metabahn"
+    year: 2021
+
+ruby:
+  gem:
+    namespace: "Featuring"
+    extra: |-2
+        spec.files = Dir["CHANGELOG.md", "README.md", "LICENSE", "lib/**/*"]
+        spec.require_path = "lib"
