@@ -1,5 +1,7 @@
 ---
 - version: v1.0.0
+  date: '2021-09-16'
+  link: https://github.com/metabahn/featuring/releases/tag/v1.0.0
   changes:
   - id: 1
     type: add
