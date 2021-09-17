@@ -1,0 +1,10 @@
+---
+- version: v1.0.0
+  changes:
+  - id: 1
+    type: add
+    summary: Initial implementation
+    link: https://github.com/metabahn/featuring/pull/1
+    author:
+      username: bryanp
+      link: https://github.com/bryanp
