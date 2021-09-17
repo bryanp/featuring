@@ -26,7 +26,7 @@ commit:
       private: true
 
   templates:
-    - source: ".commit/templates/licenses/mit.erb"
+    - source: "licenses/mit.erb"
       destination: "./LICENSE"
 
 git:
