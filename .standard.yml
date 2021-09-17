@@ -1,4 +1,6 @@
 format: progress
 parallel: true
 
-
+ignore:
+  - 'lib/featuring/persistence/adapter.rb':
+    - Lint/UnderscorePrefixedVariableName

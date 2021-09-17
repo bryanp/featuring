@@ -10,4 +10,7 @@ end
 
 group :test do
   gem "rspec"
+
+  gem "activerecord"
+  gem "pg"
 end

@@ -1,0 +1,91 @@
+name: ci
+
+on:
+  pull_request:
+    branches:
+    - main
+  push:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    name: Lint ${{ matrix.ruby }}
+
+    strategy:
+      matrix:
+        ruby:
+          - 2.6
+
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "${{matrix.ruby}}"
+
+      - name: Install Dependencies
+        shell: bash -l -e -o pipefail {0}
+        run: |
+          rm -f Gemfile.lock
+          bundle install --jobs=3 && bundle update --jobs=3
+
+      - name: Run Linter
+        shell: bash -l -e -o pipefail {0}
+        run: |
+          CI=true bundle exec standardrb
+
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:10.8
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ''
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          - 5432/tcp
+
+    name: Test ${{ matrix.ruby }}
+
+    strategy:
+      matrix:
+        ruby:
+          - 2.6
+          - 2.7
+          - 3.0
+
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "${{matrix.ruby}}"
+
+      - name: Install Dependencies
+        shell: bash -l -e -o pipefail {0}
+        run: |
+          rm -f Gemfile.lock
+          bundle install --jobs=3 && bundle update --jobs=3
+
+      - name: Install Dependencies
+        shell: bash -l -e -o pipefail {0}
+        run: |
+          rm -f Gemfile.lock
+          bundle install --jobs=3 && bundle update --jobs=3
+
+      - name: Run Tests
+        env:
+          CI: true
+          DATABASE_URL: postgres://postgres@localhost:${{ job.services.postgres.ports[5432] }}/
+        shell: bash -l -e -o pipefail {0}
+        run: |
+          bundle exec rspec
