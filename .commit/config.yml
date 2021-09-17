@@ -25,6 +25,10 @@ commit:
     - repo: "metabahn/commit-templates"
       private: true
 
+  templates:
+    - source: ".commit/templates/licenses/mit.erb"
+      destination: "./LICENSE"
+
 git:
   ignore:
     - "tmp"
