@@ -1,12 +1,12 @@
 ---
 - version: v1.0.0
   date: '2021-09-16'
-  link: https://github.com/metabahn/featuring/releases/tag/v1.0.0
+  link: https://github.com/bryanp/featuring/releases/tag/v1.0.0
   changes:
   - id: 1
     type: add
     summary: Initial implementation
-    link: https://github.com/metabahn/featuring/pull/1
+    link: https://github.com/bryanp/featuring/pull/1
     author:
       username: bryanp
       link: https://github.com/bryanp
